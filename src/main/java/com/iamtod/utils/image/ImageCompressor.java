@@ -1,5 +1,10 @@
 package com.iamtod.utils.image;
 
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.imageio.*;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.stream.ImageInputStream;
@@ -9,19 +14,20 @@ import java.io.*;
 import java.util.Iterator;
 
 /**
- *  Image Compressor for JPG and PNG
+ *  Image Compressor for JPG and PNG, the image meta data included in compressed file as well
  *
  * @author junjiang
  * @since 6/14/2016
  */
 public class ImageCompressor implements DocumentCompressor {
 
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	private static final String IMAGE_TYPE = "jpg";
 	// This ratio that indicating the desired quality level, it is between 0 and 1
 	public static final float IMAGE_QUALITY_LEVEL = 0.5f;
 
 	private String docType;
-	private String className;
 
 	/**
 	 *
@@ -29,16 +35,12 @@ public class ImageCompressor implements DocumentCompressor {
 	 */
 	public ImageCompressor(String docType) {
 		this.docType = docType;
-		this.className = "ImageCompressor-" + docType;
 	}
 
 
 	@Override
 	public byte[] compress(byte[] byteArrayDoc) {
-//		CalTransaction ct = CalUtil.buildTransaction("DocumentCompressor", className);
-//		ct.addData("originalSize", String.valueOf(byteArrayDoc.length));
-//		ct.addData("docType", docType);
-		// TODO:  add log
+		logger.info("Start compress " + docType + ", file size: " + byteArrayDoc.length);
 
 		// Build image writers
 		Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName(IMAGE_TYPE);
@@ -63,24 +65,28 @@ public class ImageCompressor implements DocumentCompressor {
 
 			imageWriter.write(null, new IIOImage(bufferedImage, null, iIOMetadata), imageWriteParam);
 			byte[] output = outputStream.toByteArray();
-//			ct.addData("compressedSize", String.valueOf(output.length));
+			logger.info("Compressed file successful, size: " + output.length);
+
 			return output;
 		} catch (Exception e) {
-//			CalUtil.exceptionEvent(className, "Compress image failed...", e);
-
+			logger.error("Compress image failed...", e);
 		} finally {
 			try {
 				outputStream.close();
 				imageOutputStream.close();
-			} catch (IOException e) {
-//				CalUtil.warningEvent(className + "_RESOURCE_RELEASE_FAILED",
-//					"Exceptions happened resource release...");
+			} catch (IOException ioe) {
+				logger.error("Exception in resource releasing...", ioe);
 			}
 			imageWriter.dispose();
 		}
 
 		// return empty byte array instead of null
 		return new byte[0];
+	}
+
+	@Override
+	public boolean compress(String fileName) {
+		return false;
 	}
 
 	/**
@@ -102,7 +108,7 @@ public class ImageCompressor implements DocumentCompressor {
 				iIOMetadata = reader.getImageMetadata(0);
 			}
 		} catch (IOException e) {
-//			CalUtil.infoEvent("FAILED_TO_BUILD_IMAGE_METADATA", "Failed to build image metadata...");
+			logger.error("Failed to build image metadata...", e);
 		} finally {
 			// close all resource
 			if (imageInputStream != null)

@@ -10,12 +10,16 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * Test PDFBOX api
+ *
+ *  Convert a PDF file to small size JPG file
+ *
  * @author junjiang
  * @since 7/13/2016
  */
-public class PDFTest {
+public class PDFBoxApiTest {
 	public static void main(String[] args) throws IOException {
-		String pdfFilename = "C:\\Github_pp\\Risk-R\\documentverificationserv\\reduced.pdf";
+		String pdfFilename = "C:\\reduced.pdf";
 		PDDocument document = PDDocument.load(new File(pdfFilename));
 		PDFRenderer pdfRenderer = new PDFRenderer(document);
 		for (int page = 0; page < document.getNumberOfPages(); ++page) {

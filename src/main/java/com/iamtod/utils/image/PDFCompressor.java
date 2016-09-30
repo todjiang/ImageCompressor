@@ -3,6 +3,8 @@ package com.iamtod.utils.image;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -17,21 +19,20 @@ import java.io.IOException;
  */
 public class PDFCompressor implements DocumentCompressor {
 
-	private static final String CLASS_NAME = "PDFCompressor-PDF";
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private static final int PAGE = 0;
 
 	@Override
 	public byte[] compress(byte[] byteArrayDoc) {
-//		CalTransaction ct = CalUtil.buildTransaction("DocumentCompressor", CLASS_NAME);
-//		ct.addData("originalSize", String.valueOf(byteArrayDoc.length));
-//		ct.addData("docType", "PDF");
+		logger.info("Start compress pdf, file size: " + byteArrayDoc.length);
 
 		PDDocument document = null;
 		try {
 			document = PDDocument.load(byteArrayDoc);
 			if (document == null) {
-//				CalUtil.warningEvent("LOAD_PDF_FAILED", "Load PDF document array failed...");
+				logger.error("Load PDF document array failed...");
+				return new byte[0];
 			}
 			PDFRenderer pdfRenderer = new PDFRenderer(document);
 
@@ -41,10 +42,11 @@ public class PDFCompressor implements DocumentCompressor {
 			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 			ImageIO.write(bim, "jpg", byteArrayOutputStream);
 			byte[] output = byteArrayOutputStream.toByteArray();
-//			ct.addData("compressedSize", String.valueOf(output.length));
+			logger.info("Compressed file successful, size: " + output.length);
+
 			return output;
 		} catch (Exception e) {
-//			CalUtil.exceptionEvent(CLASS_NAME, "Compress image failed...", e);
+			logger.error("Compress pdf failed...", e);
 		} finally {
 			if (document != null) {
 				try {
@@ -55,5 +57,10 @@ public class PDFCompressor implements DocumentCompressor {
 		}
 
 		return new byte[0];
+	}
+
+	@Override
+	public boolean compress(String fileName) {
+		return false;
 	}
 }

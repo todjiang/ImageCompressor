@@ -14,4 +14,14 @@ public interface DocumentCompressor {
 	 * @return byte array of compressed document
 	 */
 	byte[] compress(byte[] byteArrayDoc);
+
+	/**
+	 * TODO: to be implemented...
+	 *
+	 * Compress a image file
+	 *
+	 * @param fileName
+	 * @return True --> Compress successful, False --> Compress failed
+	 */
+	boolean compress(String fileName);
 }

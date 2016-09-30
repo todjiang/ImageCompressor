@@ -14,12 +14,15 @@ public class NotSupportedCompressor implements DocumentCompressor {
 	 */
 
 	public NotSupportedCompressor() {
-//		CalUtil.infoEvent("NOT_SUPPORTED_COMPRESSOR",
-//			"DOC_TYPE=" + attackDoc.type + "&DOC_SUB_TYPE=" + attackDoc.sub_type);
 	}
 
 	@Override
 	public byte[] compress(byte[] doc) {
 		return new byte[0];
+	}
+
+	@Override
+	public boolean compress(String fileName) {
+		return false;
 	}
 }

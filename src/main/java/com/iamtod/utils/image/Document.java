@@ -7,4 +7,5 @@ package com.iamtod.utils.image;
  * @since 2016/9/24
  */
 public class Document {
+
 }

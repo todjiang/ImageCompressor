@@ -16,7 +16,7 @@ import java.util.Iterator;
  * @author junjiang
  * @since 4/5/2016
  */
-public class ImageCompressionTest {
+public class ImageApiTest {
 
 	public static void main(String[] args)  {
 		// set to a local image path
