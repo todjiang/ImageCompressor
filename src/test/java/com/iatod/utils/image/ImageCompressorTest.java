@@ -1,8 +1,10 @@
 package com.iatod.utils.image;
 
 import com.google.common.io.Files;
+import com.google.common.io.Resources;
 import com.iamtod.utils.image.DocumentCompressor;
 import com.iamtod.utils.image.DocumentCompressorFactory;
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
@@ -17,20 +19,34 @@ import static org.junit.Assert.assertTrue;
  */
 public class ImageCompressorTest {
 
+    private static final String OUTPUT_FILE_NAME = "sample_passport_compressed.jpg";
+
+    @After
+    public void cleanUp() {
+        File fileToDelete = new File(OUTPUT_FILE_NAME);
+        boolean success = fileToDelete.delete();
+        assertTrue(success);
+    }
+
     @Test
     public void testJPG() throws IOException {
-        String inputImageFileName = "Passport-lrg-txt.jpg";
+        String inputImageFileName = "sample_passport.jpg";
+
         DocumentCompressor compressor = DocumentCompressorFactory.findImageCompressor("JPG");
 
-        String path = "C:\\Github\\todjiang\\ImageCompressor\\src\\test\\java\\resources\\" + inputImageFileName;
-
-        byte[] imageByteArray = Files.toByteArray(new File(path));
+        byte[] imageByteArray = Resources.toByteArray(Resources.getResource(inputImageFileName));
 
         byte[] compressedImageByteArray = compressor.compress(imageByteArray);
 
         assertNotNull(compressedImageByteArray);
+
         assertTrue(compressedImageByteArray.length < imageByteArray.length);
 
-        Files.write(compressedImageByteArray, new File(path.replaceAll("\\.", "_compressed.")));
+
+        File outputFile = new File(OUTPUT_FILE_NAME);
+
+        Files.write(compressedImageByteArray, outputFile);
+
+        assertNotNull(outputFile);
     }
 }
