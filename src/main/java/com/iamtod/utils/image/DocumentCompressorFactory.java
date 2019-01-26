@@ -21,7 +21,6 @@ public class DocumentCompressorFactory {
 	 * @return
 	 */
 	public static DocumentCompressor findImageCompressor(String imageType) {
-
 		if (JPG_TYPE.equalsIgnoreCase(imageType)) {
 			return new ImageCompressor(JPG_TYPE);
 		} else if (PNG_TYPE.equalsIgnoreCase(imageType)) {
@@ -29,7 +28,12 @@ public class DocumentCompressorFactory {
 		} else if (PDF_TYPE.equalsIgnoreCase(imageType)) {
 			return new PDFCompressor();
 		} else {
-			return new NotSupportedCompressor();
+			return new NotSupportedCompressor(imageType);
 		}
+	}
+
+
+	public static DocumentCompressor findImageCompressorByFileName(String fileName) {
+		return findImageCompressor(fileName.substring(fileName.lastIndexOf('.') + 1));
 	}
 }

@@ -24,8 +24,11 @@ public class ImageCompressor implements DocumentCompressor {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private static final String IMAGE_TYPE = "jpg";
-	// This ratio that indicating the desired quality level, it is between 0 and 1
-	public static final float IMAGE_QUALITY_LEVEL = 0.5f;
+
+	/**
+	 * 	This ratio that indicating the desired quality level, it is between 0 and 1
+ 	 */
+	private static final float IMAGE_QUALITY_LEVEL = 0.5f;
 
 	private String docType;
 
@@ -40,7 +43,7 @@ public class ImageCompressor implements DocumentCompressor {
 
 	@Override
 	public byte[] compress(byte[] byteArrayDoc) {
-		logger.info("Start compress " + docType + ", file size: " + byteArrayDoc.length);
+		logger.info("Start compress {}, file size: {}", docType, byteArrayDoc.length);
 
 		// Build image writers
 		Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName(IMAGE_TYPE);
@@ -65,7 +68,7 @@ public class ImageCompressor implements DocumentCompressor {
 
 			imageWriter.write(null, new IIOImage(bufferedImage, null, iIOMetadata), imageWriteParam);
 			byte[] output = outputStream.toByteArray();
-			logger.info("Compressed file successful, size: " + output.length);
+			logger.info("Compressed file successful, size: {}", output.length);
 
 			return output;
 		} catch (Exception e) {
@@ -87,6 +90,11 @@ public class ImageCompressor implements DocumentCompressor {
 	@Override
 	public boolean compress(String fileName) {
 		return false;
+	}
+
+	@Override
+	public String getName() {
+		return "ImageCompressor";
 	}
 
 	/**
@@ -111,11 +119,13 @@ public class ImageCompressor implements DocumentCompressor {
 			logger.error("Failed to build image metadata...", e);
 		} finally {
 			// close all resource
-			if (imageInputStream != null)
+			if (imageInputStream != null) {
 				try {
 					imageInputStream.close();
 				} catch (IOException e) {
+					// do nothing
 				}
+			}
 		}
 
 		return iIOMetadata;

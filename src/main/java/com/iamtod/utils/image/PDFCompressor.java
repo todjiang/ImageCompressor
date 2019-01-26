@@ -25,7 +25,7 @@ public class PDFCompressor implements DocumentCompressor {
 
 	@Override
 	public byte[] compress(byte[] byteArrayDoc) {
-		logger.info("Start compress pdf, file size: " + byteArrayDoc.length);
+		logger.info("Start compress pdf, file size: {}", byteArrayDoc.length);
 
 		PDDocument document = null;
 		try {
@@ -42,7 +42,7 @@ public class PDFCompressor implements DocumentCompressor {
 			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 			ImageIO.write(bim, "jpg", byteArrayOutputStream);
 			byte[] output = byteArrayOutputStream.toByteArray();
-			logger.info("Compressed file successful, size: " + output.length);
+			logger.info("Compressed file successful, size: {}", output.length);
 
 			return output;
 		} catch (Exception e) {
@@ -62,5 +62,10 @@ public class PDFCompressor implements DocumentCompressor {
 	@Override
 	public boolean compress(String fileName) {
 		return false;
+	}
+
+	@Override
+	public String getName() {
+		return "PDFCompressor";
 	}
 }

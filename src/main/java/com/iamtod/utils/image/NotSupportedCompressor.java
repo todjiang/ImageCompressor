@@ -8,12 +8,14 @@ package com.iamtod.utils.image;
  */
 public class NotSupportedCompressor implements DocumentCompressor {
 
-	/**
-	 * Print CAL in Not supported document type
-	 *
-	 */
+	private String docType;
 
-	public NotSupportedCompressor() {
+	public NotSupportedCompressor(String docType) {
+		this.docType = docType;
+	}
+
+	public String getDocType() {
+		return docType;
 	}
 
 	@Override
@@ -25,4 +27,11 @@ public class NotSupportedCompressor implements DocumentCompressor {
 	public boolean compress(String fileName) {
 		return false;
 	}
+
+	@Override
+	public String getName() {
+		return "NotSupportedCompressor";
+	}
+
+
 }

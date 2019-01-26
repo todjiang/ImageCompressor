@@ -24,4 +24,7 @@ public interface DocumentCompressor {
 	 * @return True --> Compress successful, False --> Compress failed
 	 */
 	boolean compress(String fileName);
+
+
+	String getName();
 }

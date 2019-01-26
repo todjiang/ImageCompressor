@@ -24,15 +24,17 @@ public class ImageCompressorTest {
     @After
     public void cleanUp() {
         File fileToDelete = new File(OUTPUT_FILE_NAME);
-        boolean success = fileToDelete.delete();
-        assertTrue(success);
+        if (fileToDelete.exists()) {
+            boolean success = fileToDelete.delete();
+            assertTrue(success);
+        }
     }
 
     @Test
     public void testJPG() throws IOException {
-        String inputImageFileName = "sample_passport.jpg";
+        final String inputImageFileName = "sample1.jpg";
 
-        DocumentCompressor compressor = DocumentCompressorFactory.findImageCompressor("JPG");
+        DocumentCompressor compressor = DocumentCompressorFactory.findImageCompressorByFileName(inputImageFileName);
 
         byte[] imageByteArray = Resources.toByteArray(Resources.getResource(inputImageFileName));
 
