@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Convert large PDF file to jpg type, suppose doc size will be reduced
  *
- * @author junjiang
+ * @author todjiang
  * @since 7/7/2016
  */
 public class PDFCompressor implements DocumentCompressor {
@@ -52,6 +52,7 @@ public class PDFCompressor implements DocumentCompressor {
 				try {
 					document.close();
 				} catch (IOException e) {
+					// do nothing
 				}
 			}
 		}

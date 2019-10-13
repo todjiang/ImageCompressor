@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * @author junjiang
+ * @author todjiang
  * @since 2016/9/30
  */
 public class ImageCompressorTest {

@@ -1,7 +1,6 @@
 package com.iatod.utils.image;
 
 import com.iamtod.utils.image.DocumentCompressorFactory;
-import com.iamtod.utils.image.ImageCompressor;
 import org.junit.Assert;
 import org.junit.Test;
 

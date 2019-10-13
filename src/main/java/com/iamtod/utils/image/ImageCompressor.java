@@ -1,22 +1,26 @@
 package com.iamtod.utils.image;
 
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.imageio.*;
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.MemoryCacheImageOutputStream;
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.awt.image.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Iterator;
 
 /**
  *  Image Compressor for JPG and PNG, the image meta data included in compressed file as well
  *
- * @author junjiang
+ * @author todjiang
  * @since 6/14/2016
  */
 public class ImageCompressor implements DocumentCompressor {

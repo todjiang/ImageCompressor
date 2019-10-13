@@ -3,7 +3,7 @@ package com.iamtod.utils.image;
 /**
  * Have a default compressor for those non-supported type and do nothing in compress method
  *
- * @author junjiang
+ * @author todjiang
  * @since 6/14/2016
  */
 public class NotSupportedCompressor implements DocumentCompressor {

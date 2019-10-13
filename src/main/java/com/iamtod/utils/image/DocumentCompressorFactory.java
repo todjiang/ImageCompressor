@@ -3,7 +3,7 @@ package com.iamtod.utils.image;
 /**
  * Document Compressor Factory for all support types
  *
- * @author junjiang
+ * @author todjiang
  * @since 6/14/2016
  */
 public class DocumentCompressorFactory {

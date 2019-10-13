@@ -14,10 +14,11 @@ import java.io.IOException;
  *
  *  Convert a PDF file to small size JPG file
  *
- * @author junjiang
+ * @author todjiang
  * @since 7/13/2016
  */
 public class PDFBoxApiTest {
+
 	public static void main(String[] args) throws IOException {
 		String pdfFilename = "C:\\reduced.pdf";
 		PDDocument document = PDDocument.load(new File(pdfFilename));
